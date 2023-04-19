@@ -1,16 +1,17 @@
-from dotenv import load_dotenv
+
 import os
 from langchain.document_loaders import UnstructuredPDFLoader, OnlinePDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import WebBaseLoader
 
-
+from dotenv import load_dotenv
 def configure():
     load_dotenv()
-
 configure()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
+# OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+#print(OPENAI_API_KEY)
 
 URL = "https://nuclearsafety.gc.ca/eng/acts-and-regulations/regulatory-documents/published/html/regdoc2-5-2/index.cfm"
 loader = WebBaseLoader(URL)
@@ -23,3 +24,4 @@ texts = text_splitter.split_documents(data)
 print (f'Now you have {len(texts)} documents')
 
 from langchain.vectorstores import Milvus
+from pymilvus import connections, FieldSchema, CollectionSchema, DataType, Collection, utility
